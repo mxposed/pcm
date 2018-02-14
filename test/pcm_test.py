@@ -14,6 +14,11 @@ class TestPcm(unittest.TestCase):
         pcm.delete_entry(pcm.all_entries[0]['uuid'])
         self.assertEqual(0, len(pcm.all_entries), 'Should be empty')
 
+    def test_parse_bibtex_file(self):
+        entry = pcm.parse_bibtex_file('scholar_1.txt')
+        self.assertEqual('book', entry['bibtex_class'], 'An entry is a book')
+
+
 
 if __name__ == '__main__':
     unittest.main()
