@@ -91,6 +91,8 @@ def add_entry(bibtex_file):
 def format_entry(entry):
     result = 'Title: {}\n'.format(entry['title'])
     result += 'Author: {}\n'.format(entry['author'])
+    if entry['bibtex_class'] == 'online':
+        result += 'URL: {}\n'.format(entry['url'])
     result += '-----\n'
     result += 'BibTeX Class: {}\n'.format(entry['bibtex_class'])
     result += 'UUID: {}\n'.format(entry['uuid'])
