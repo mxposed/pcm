@@ -40,6 +40,18 @@ class TestPcm(unittest.TestCase):
         output = pcm.format_entry(entry)
         self.assertTrue('Hetherington' in output)
 
+    def test_format_entry2(self):
+        bibtex = """@online{BlastHandbook,
+  author={Madden T.},
+  title={The BLAST Sequence Analysis Tool},
+  year={2013}
+  url={https://www.ncbi.nlm.nih.gov/books/NBK153387/},
+  urldate={2018-02-14}
+}"""
+        entry = pcm.parse_bibtex_entry(bibtex)
+        output = pcm.format_entry(entry)
+        self.assertTrue('ncbi.nlm.nih.gov' in output)
+
 
 if __name__ == '__main__':
     unittest.main()
