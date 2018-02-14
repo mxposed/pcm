@@ -88,19 +88,23 @@ def add_entry(bibtex_file):
     all_entries.append(parse_bibtex_file(bibtex_file))
 
 
+def format_entry(entry):
+    result = 'Title: {}\n'.format(entry['title'])
+    result += 'Author: {}\n'.format(entry['author'])
+    result += '-----\n'
+    result += 'BibTeX Class: {}\n'.format(entry['bibtex_class'])
+    result += 'UUID: {}\n'.format(entry['uuid'])
+    result += '=====\n'
+    return result
+
+
 def list_entries(entries_to_print):
     """Prints an appealing representation of entries"""
     print()
     print("Printing all entries:")
     print()
     for entry in entries_to_print:
-        print("Title: {}".format(entry["title"]))
-        print("Author: {}".format(entry["author"]))
-        print("-----")
-        print("BibTeX Class: {}".format(entry["bibtex_class"]))
-        print("UUID: {}".format(entry["uuid"]))
-        print("=====")
-        print()
+        print(format_entry(entry))
     print("Done printing.")
 
 
