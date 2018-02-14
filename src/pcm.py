@@ -51,18 +51,21 @@ all_entries = []
 #                         #
 ###########################
 
-
 def parse_bibtex_file(bibtex_file):
     """Returns a dictionary of a parsed entry for a given BibTeX file"""
+    with open(bibtex_file, 'r') as f:
+        file_contents = f.read()
+    return parse_bibtex_entry(file_contents)
+
+
+def parse_bibtex_entry(entry):
+    """Returns a dictionary of a parsed entry for a given BibTeX entry"""
 
     new_entry = {}
 
-    with open(bibtex_file, 'r') as f:
-        file_contents = f.read()
-
-    field_pairs  = re.findall(r"\s{3}(.*?)={(.*?)}", file_contents)
-    bibtex_class = re.findall(r"(?<=@).*?(?={)",     file_contents)[0]
-    cite_key     = re.findall(r"@.*{(.*),",          file_contents)[0]
+    field_pairs  = re.findall(r"\s{3}(.*?)={(.*?)}", entry)
+    bibtex_class = re.findall(r"(?<=@).*?(?={)",     entry)[0]
+    cite_key     = re.findall(r"@.*{(.*),",          entry)[0]
 
     # Set fields
     for (key, value) in field_pairs:
