@@ -25,6 +25,10 @@ class TestPcm(unittest.TestCase):
         entry = pcm.parse_bibtex_entry(bibtex)
         self.assertEqual('book', entry['bibtex_class'], 'An entry is a book')
 
+    def test_list_entries(self):
+        pcm.add_entry('scholar_1.txt')
+        pcm.list_entries(pcm.all_entries)
+
 
 
 if __name__ == '__main__':
