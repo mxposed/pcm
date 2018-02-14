@@ -14,8 +14,15 @@ class TestPcm(unittest.TestCase):
         pcm.delete_entry(pcm.all_entries[0]['uuid'])
         self.assertEqual(0, len(pcm.all_entries), 'Should be empty')
 
-    def test_parse_bibtex_file(self):
-        entry = pcm.parse_bibtex_file('scholar_1.txt')
+    def test_parse_bibtex_entry(self):
+        bibtex = """@book{smith1994blast,
+  title={Blast and ballistic loading of structures},
+  author={Smith, Peter D and Hetherington, John G},
+  year={1994},
+  publisher={Digital Press}
+}
+        """
+        entry = pcm.parse_bibtex_entry(bibtex)
         self.assertEqual('book', entry['bibtex_class'], 'An entry is a book')
 
 
