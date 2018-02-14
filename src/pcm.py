@@ -51,6 +51,10 @@ all_entries = []
 #                         #
 ###########################
 
+def clear_library():
+    all_entries.clear()
+
+
 def parse_bibtex_file(bibtex_file):
     """Returns a dictionary of a parsed entry for a given BibTeX file"""
     with open(bibtex_file, 'r') as f:
