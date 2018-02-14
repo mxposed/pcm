@@ -28,9 +28,17 @@ class TestPcm(unittest.TestCase):
         entry = pcm.parse_bibtex_entry(bibtex)
         self.assertEqual('book', entry['bibtex_class'], 'An entry is a book')
 
-    def test_list_entries(self):
-        pcm.add_entry('scholar_1.txt')
-        pcm.list_entries(pcm.all_entries)
+    def test_format_entry(self):
+        bibtex = """@book{smith1994blast,
+  title={Blast and ballistic loading of structures},
+  author={Smith, Peter D and Hetherington, John G},
+  year={1994},
+  publisher={Digital Press}
+}
+        """
+        entry = pcm.parse_bibtex_entry(bibtex)
+        output = pcm.format_entry(entry)
+        self.assertTrue('Hetherington' in output)
 
 
 if __name__ == '__main__':
