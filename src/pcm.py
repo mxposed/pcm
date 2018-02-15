@@ -12,6 +12,7 @@ import re
 import uuid
 import pickle
 
+import entries
 
 ###########################
 #                         #
@@ -80,6 +81,27 @@ def parse_bibtex_entry(entry):
     new_entry["bibtex_class"] = bibtex_class
     new_entry["cite_key"]     = cite_key
 
+    if bibtex_class == 'book':
+        new_entry = entries.Book(new_entry['uuid'],
+                                 new_entry['author'],
+                                 new_entry['title'],
+                                 new_entry['cite_key'],
+                                 new_entry['year'],
+                                 new_entry['publisher'])
+    elif bibtex_class == 'article':
+        new_entry = entries.Article(new_entry['uuid'],
+                                    new_entry['author'],
+                                    new_entry['title'],
+                                    new_entry['cite_key'],
+                                    new_entry['year'],
+                                    new_entry['publisher'])
+    elif bibtex_class == 'online':
+        new_entry = entries.Online(new_entry['uuid'],
+                                   new_entry['author'],
+                                   new_entry['title'],
+                                   new_entry['cite_key'],
+                                   new_entry['url'])
+
     return new_entry
 
 
@@ -89,15 +111,7 @@ def add_entry(bibtex_file):
 
 
 def format_entry(entry):
-    result = 'Title: {}\n'.format(entry['title'])
-    result += 'Author: {}\n'.format(entry['author'])
-    if entry['bibtex_class'] == 'online':
-        result += 'URL: {}\n'.format(entry['url'])
-    result += '-----\n'
-    result += 'BibTeX Class: {}\n'.format(entry['bibtex_class'])
-    result += 'UUID: {}\n'.format(entry['uuid'])
-    result += '=====\n'
-    return result
+    return str(entry)
 
 
 def list_entries(entries_to_print):
@@ -117,7 +131,7 @@ def export_entries(entries_to_export):
 
 def delete_entry(uuid_of_entry_to_delete):
     for entry in all_entries:
-        if entry["uuid"] == uuid_of_entry_to_delete:
+        if entry.uuid == uuid_of_entry_to_delete:
             all_entries.remove(entry)
 
 

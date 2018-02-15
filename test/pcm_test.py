@@ -14,7 +14,7 @@ class TestPcm(unittest.TestCase):
 
     def test_delete_entry(self):
         pcm.add_entry('scholar_1.txt')
-        pcm.delete_entry(pcm.all_entries[0]['uuid'])
+        pcm.delete_entry(pcm.all_entries[0].uuid)
         self.assertEqual(0, len(pcm.all_entries), 'Should be empty')
 
     def test_parse_bibtex_entry(self):
