@@ -10,9 +10,9 @@
 
 import re
 import uuid
-import pickle
 
-import entries
+from lib import entries
+from lib.dbm import Dbm
 
 ###########################
 #                         #
@@ -20,15 +20,12 @@ import entries
 #                         #
 ###########################
 
-
 # Please note that these might be subject to change!
 
 # TODO: Make programme use `argparse` to properly run from command line
 # TODO: Insert assertions and exceptions where sensible
-# TODO: Write unit tests
-# TODO: Move to OOP
-# TODO: Modularise
-# TODO: Extend with notes, favourites, tags, search, update,
+# TODO: Write additional unit tests
+# TODO: Extend with notes, favourites, tags, search, update, ...
 
 
 ###########################
@@ -37,10 +34,6 @@ import entries
 #                         #
 ###########################
 
-
-# TODO: Should make use of `configparser` instead
-
-DATA_FILE = "database.pickle"
 
 # Variable initialisation
 all_entries = []
@@ -60,12 +53,14 @@ def parse_bibtex_file(bibtex_file):
     """Returns a dictionary of a parsed entry for a given BibTeX file"""
     with open(bibtex_file, 'r') as f:
         file_contents = f.read()
+
     return parse_bibtex_entry(file_contents)
 
 
 def parse_bibtex_entry(entry):
     """Returns a dictionary of a parsed entry for a given BibTeX entry"""
 
+    # We start out with a dictionary, but will turn it into a proper object further down
     new_entry = {}
 
     field_pairs  = re.findall(r"\s{3}(.*?)={(.*?)}", entry)
@@ -88,13 +83,15 @@ def parse_bibtex_entry(entry):
                                  new_entry['cite_key'],
                                  new_entry['year'],
                                  new_entry['publisher'])
+
     elif bibtex_class == 'article':
         new_entry = entries.Article(new_entry['uuid'],
                                     new_entry['author'],
                                     new_entry['title'],
                                     new_entry['cite_key'],
-                                    new_entry['year'],
-                                    new_entry['publisher'])
+                                    new_entry['journal'],
+                                    new_entry['volume'])
+
     elif bibtex_class == 'online':
         new_entry = entries.Online(new_entry['uuid'],
                                    new_entry['author'],
@@ -135,38 +132,32 @@ def delete_entry(uuid_of_entry_to_delete):
             all_entries.remove(entry)
 
 
-def write_database(entries_to_store):
-    with open(DATA_FILE, 'wb') as f:
-        # Pickle the 'data' dictionary using the highest protocol available.
-        pickle.dump(entries_to_store, f, pickle.HIGHEST_PROTOCOL)
-
-
-def read_database():
-    with open(DATA_FILE, 'rb') as f:
-        # The protocol version used is detected automatically, so we do not
-        # have to specify it.
-        return pickle.load(f)
-
-
 ###########################
 #                         #
 # Main execution section  #
 #                         #
 ###########################
 
-
 if __name__ == "__main__":
+
+    # Create database
+
+    """
+    my_dbm = Dbm()
 
     # Add and save
 
-    """
     add_entry("../Resources/scholar_1.txt")
     add_entry("../Resources/scholar_2.txt")
+    add_entry("../Resources/scholar_3.txt")
 
     list_entries(all_entries)
 
-    write_database(all_entries)
+    my_dbm.write_database(all_entries)
+
     """
+
+    # TODO: Entries below still use the old style of accessing the database
 
     # Restore list
 
