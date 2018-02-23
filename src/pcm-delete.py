@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import sys
 import argparse
 
@@ -13,7 +16,13 @@ def set_up_argparse():
     argument_parser.add_argument(
         'uuid',
         nargs='+',
-        help="ID of the entry to delete"
+        help="ID of the entry or entries to delete"
+    )
+
+    argument_parser.add_argument(
+        "-e",
+        "--echo",
+        help="Echo back which entry we're deleting"
     )
 
 

@@ -1,3 +1,6 @@
+import datetime
+
+
 class Entry:
 
     # TODO: This still requires plenty of boilerplate code.
@@ -9,6 +12,10 @@ class Entry:
         self.title = title
         self.cite_key = cite_key
         self.is_favourite = is_favourite
+        self.notes = notes
+        self.tags = tags
+
+        self.creation_date = datetime.datetime.now()
 
     def __str__(self):
         result =  'Title: {}\n'.format(self.title)
@@ -17,6 +24,7 @@ class Entry:
         result += '-----\n'
         result += 'BibTeX Class: {}\n'.format(self.__class__.__name__.lower())
         result += 'UUID: {}\n'.format(self.uuid)
+        result += 'Created on: {}\n'.format(self.creation_date)
         return result
 
     def print_fields(self):
