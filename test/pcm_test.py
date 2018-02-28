@@ -1,6 +1,7 @@
 import unittest
 
 import pcm
+from lib import entries
 
 
 class TestPcm(unittest.TestCase):
@@ -23,10 +24,10 @@ class TestPcm(unittest.TestCase):
   author={Smith, Peter D and Hetherington, John G},
   year={1994},
   publisher={Digital Press}
-}
-        """
+}"""
+
         entry = pcm.parse_bibtex_entry(bibtex)
-        self.assertEqual('book', entry['bibtex_class'], 'An entry is a book')
+        self.assertTrue(isinstance(entry, entries.Book), 'Tested entry is a book')
 
     def test_format_entry(self):
         bibtex = """@book{smith1994blast,
@@ -34,12 +35,12 @@ class TestPcm(unittest.TestCase):
   author={Smith, Peter D and Hetherington, John G},
   year={1994},
   publisher={Digital Press}
-}
-        """
+}"""
         entry = pcm.parse_bibtex_entry(bibtex)
         output = pcm.format_entry(entry)
-        self.assertTrue('Hetherington' in output)
+        self.assertTrue('Hetherington' in output, '"Author" field is contained in output')
 
+    # Please note, that there is no guaranteed order in which tests are run, even if they are numbered
     def test_format_entry2(self):
         bibtex = """@online{BlastHandbook,
   author={Madden T.},

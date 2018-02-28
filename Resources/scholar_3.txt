@@ -1,0 +1,7 @@
+@online{BlastHandbook,
+  author={Madden T.},
+  title={The BLAST Sequence Analysis Tool},
+  year={2013},
+  url={https://www.ncbi.nlm.nih.gov/books/NBK153387/},
+  urldate={2018-02-14}
+}"
