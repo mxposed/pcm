@@ -59,7 +59,11 @@ def run():
     my_dbm = Dbm()
 
     # Get all current contents
-    database_contents = my_dbm.read_database()
+    try:
+        database_contents = my_dbm.read_database()
+    except FileNotFoundError:
+        print("Get the database ready, maaan!")
+        sys.exit(1)
 
     list_entries(database_contents, args)
 

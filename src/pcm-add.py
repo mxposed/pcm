@@ -106,10 +106,9 @@ def run():
 
     # Add new entry/entries to previous database contents
     new_database_contents = old_database_contents
-    for file in args.files:
-        new_database_contents = new_database_contents.append(
-            parse_bibtex_file(file)
-        )
+    new_database_contents.append(
+        parse_bibtex_file(args.file)
+    )
 
     # Write back modified list of entries
     my_dbm.write_database(new_database_contents)
