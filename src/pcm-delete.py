@@ -42,13 +42,22 @@ def run():
     my_dbm = Dbm()
 
     # Get all current contents
-    old_database_contents = my_dbm.read_database()
+    library = my_dbm.read_database()
 
     # Filter out entr(y|ies) we wish to delete
-    new_database_contents = [entry for entry in old_database_contents if entry.uuid not in args.uuid]
+    cleaned_entries = []
+    for entry in library.entries:
+        if entry.uuid not in args.uuid:
+            cleaned_entries.append(entry)
+        else:
+            for tag in entry.tags:
+                if len(tag.entries) == 1:
+                    library.tags.remove(tag)
+
+    library.entries = cleaned_entries
 
     # Write back modified list of entries
-    my_dbm.write_database(new_database_contents)
+    my_dbm.write_database(library)
 
 
 if __name__ == "__main__":

@@ -84,6 +84,14 @@ def set_up_argparse():
         help="Attach this note or these notes to the entry"
     )
 
+    argument_parser.add_argument(
+        '-t',
+        "--tag",
+        dest='tags',
+        nargs="+",
+        help="Tag the entry"
+    )
+
 
 def run():
     # Set up argument parser
@@ -102,16 +110,21 @@ def run():
 
     # Get all current contents
     # TODO: Check if database can actually be read. Otherwise create an empty one!
-    old_database_contents = my_dbm.read_database()
+    db = my_dbm.read_database()
 
     # Add new entry/entries to previous database contents
-    new_database_contents = old_database_contents
-    new_database_contents.append(
-        parse_bibtex_file(args.file)
+    entry = parse_bibtex_file(args.file)
+    db.entries.append(
+        entry
     )
 
+    for tag_name in args.tags:
+        tag = Tag(tag_name)
+        entry.add_tag(tag)
+        db.tags.add(tag)
+
     # Write back modified list of entries
-    my_dbm.write_database(new_database_contents)
+    my_dbm.write_database(db)
 
 
 if __name__ == "__main__":
