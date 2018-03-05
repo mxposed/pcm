@@ -3,7 +3,7 @@
 
 import sys
 
-from lib.dbm import Dbm
+from lib.dbm import Dbm, Library
 
 
 def run():
@@ -17,7 +17,7 @@ def run():
     except FileNotFoundError:
         pass
 
-    my_dbm.write_database([])
+    my_dbm.write_database(Library())
 
 
 if __name__ == "__main__":
